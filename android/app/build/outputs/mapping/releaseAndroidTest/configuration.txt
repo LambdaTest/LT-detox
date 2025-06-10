@@ -1,0 +1,240 @@
+# The proguard configuration file for the following section is /Users/siddhants/.gradle/caches/transforms-3/f63f2905a1df60583d03ec773ef32281/transformed/jetified-detox-20.28.0/proguard.txt
+-dontwarn org.xmlpull.**
+-dontwarn sun.misc.**
+
+-dontnote android.**
+-dontnote androidx.**
+-dontnote java.**
+-dontnote javax.**
+-dontnote kotlin.**
+-dontnote org.apache.**
+-dontnote junit.**
+-dontnote org.junit.**
+-dontnote org.joor.**
+-dontnote org.hamcrest.**
+-dontnote com.facebook.**
+
+-keep class org.apache.commons.lang3.** { *; }
+-keep class org.apache.commons.io.** { *; }
+
+# Detox profiler (optional)
+
+-keep class com.wix.detoxprofiler.** { *; }
+-dontnote  com.wix.detox.instruments.reflected.**
+
+-dontwarn androidx.appcompat.**
+-dontwarn javax.lang.model.element.**
+
+# End of content from /Users/siddhants/.gradle/caches/transforms-3/f63f2905a1df60583d03ec773ef32281/transformed/jetified-detox-20.28.0/proguard.txt
+# The proguard configuration file for the following section is /Users/siddhants/.gradle/caches/transforms-3/e2932e41278159b310bcbc741778182c/transformed/material-1.4.0/proguard.txt
+# Copyright (C) 2015 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# CoordinatorLayout resolves the behaviors of its child components with reflection.
+-keep public class * extends androidx.coordinatorlayout.widget.CoordinatorLayout$Behavior {
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>();
+}
+
+# Make sure we keep annotations for CoordinatorLayout's DefaultBehavior
+-keepattributes RuntimeVisible*Annotation*
+
+# Copyright (C) 2018 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# AppCompatViewInflater reads the viewInflaterClass theme attribute which then
+# reflectively instantiates MaterialComponentsViewInflater using the no-argument
+# constructor. We only need to keep this constructor and the class name if
+# AppCompatViewInflater is also being kept.
+-if class androidx.appcompat.app.AppCompatViewInflater
+-keep class com.google.android.material.theme.MaterialComponentsViewInflater {
+    <init>();
+}
+
+
+# End of content from /Users/siddhants/.gradle/caches/transforms-3/e2932e41278159b310bcbc741778182c/transformed/material-1.4.0/proguard.txt
+# The proguard configuration file for the following section is /Users/siddhants/.gradle/caches/transforms-3/8a41f0a27b719d215baa4fdcda3bd51b/transformed/espresso-web-3.6.1/proguard.txt
+# Common proguard flags for all the espresso libraries.
+
+# ignore 'cannot find java.beans and mockito integration' warnings
+-dontwarn org.hamcrest.**
+
+# ignore 'can't find referenced class sun.misc.Unsafe' from guava
+-dontwarn androidx.test.espresso.web.deps.guava.**
+
+# End of content from /Users/siddhants/.gradle/caches/transforms-3/8a41f0a27b719d215baa4fdcda3bd51b/transformed/espresso-web-3.6.1/proguard.txt
+# The proguard configuration file for the following section is /Users/siddhants/.gradle/caches/transforms-3/fc8b46d64fc1b305cdc0c7862c94981a/transformed/espresso-core-3.6.1/proguard.txt
+# Common proguard flags for all the espresso libraries.
+
+# ignore 'cannot find java.beans and mockito integration' warnings
+-dontwarn org.hamcrest.**
+
+# ignore 'can't find referenced class sun.misc.Unsafe' from guava
+-dontwarn androidx.test.espresso.core.deps.guava.**
+
+# ignore 'can't find referenced class javax.lang.model.element.Modifier'
+-dontwarn com.squareup.javawriter.JavaWriter
+
+# ignore 'can't find referenced class sun.misc.Unsafe, libcore.io.Memory' from protobuf
+-dontwarn androidx.test.espresso.core.deps.protobuf.**
+
+# ignore 'can't find referenced method android.app.Instrumentation' from android.jar
+-dontwarn androidx.test.runner.MonitoringInstrumentation
+
+
+# End of content from /Users/siddhants/.gradle/caches/transforms-3/fc8b46d64fc1b305cdc0c7862c94981a/transformed/espresso-core-3.6.1/proguard.txt
+# The proguard configuration file for the following section is /Users/siddhants/.gradle/caches/transforms-3/9f6352e1e9339472b17d171d0a310fb4/transformed/rules-1.6.1/proguard.txt
+# for 'can't find referenced method 'android.app.Instrumentation$ActivityResult execStartActivity' etc
+-dontwarn androidx.test.runner.MonitoringInstrumentation
+
+# for 'library class android.test.* extends or implements program class'
+-dontwarn android.test.**
+
+
+# End of content from /Users/siddhants/.gradle/caches/transforms-3/9f6352e1e9339472b17d171d0a310fb4/transformed/rules-1.6.1/proguard.txt
+# The proguard configuration file for the following section is /Users/siddhants/.gradle/caches/transforms-3/dee7ecadb473f8607fc6f5eff09b009f/transformed/runner-1.6.1/proguard.txt
+# Proguard flags for the AndroidJUnitRunner library.
+
+# avoid obfuscation of the instrumentation runners and orchestrator
+-keepnames class androidx.test.**
+
+# Annotation classes accessed via reflection
+-keep class androidx.test.annotation.** { *; }
+
+# for 'can't find referenced method 'android.app.Instrumentation$ActivityResult execStartActivity' etc
+-dontwarn androidx.test.runner.MonitoringInstrumentation
+
+# for 'library class android.test.* extends or implements program class'
+-dontwarn android.test.**
+
+# for 'can't find referenced class java.lang.management.RuntimeMXBean'
+-dontwarn org.junit.rules.DisableOnDebug
+
+# for 'can't find referenced class java.lang.management.ThreadMXBean'
+-dontwarn org.junit.internal.runners.statements.FailOnTimeout
+
+# for 'can't find referenced class java.beans.**, easymock, etc
+-dontwarn org.hamcrest.**
+
+# End of content from /Users/siddhants/.gradle/caches/transforms-3/dee7ecadb473f8607fc6f5eff09b009f/transformed/runner-1.6.1/proguard.txt
+# The proguard configuration file for the following section is /Users/siddhants/.gradle/caches/transforms-3/7f152144e02dc21defdbb085eee55ea6/transformed/monitor-1.7.1/proguard.txt
+# Proguard flags for the AndroidJUnitRunner library.
+
+# avoid obfuscation of the instrumentation runners and orchestrator
+-keepnames class androidx.test.**
+
+# Annotation classes accessed via reflection
+-keep class androidx.test.annotation.** { *; }
+
+# for 'can't find referenced method 'android.app.Instrumentation$ActivityResult execStartActivity' etc
+-dontwarn androidx.test.runner.MonitoringInstrumentation
+
+# for class com.google.errorprone.annotations.InlineMe is not in the runtime classpath
+-dontwarn com.google.errorprone.annotations.InlineMe
+
+# End of content from /Users/siddhants/.gradle/caches/transforms-3/7f152144e02dc21defdbb085eee55ea6/transformed/monitor-1.7.1/proguard.txt
+# The proguard configuration file for the following section is /Users/siddhants/.gradle/caches/transforms-3/d40cf591b2d1674087caabe402d9f2ee/transformed/recyclerview-1.2.1/proguard.txt
+# Copyright (C) 2015 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# When layoutManager xml attribute is used, RecyclerView inflates
+#LayoutManagers' constructors using reflection.
+-keep public class * extends androidx.recyclerview.widget.RecyclerView$LayoutManager {
+    public <init>(android.content.Context, android.util.AttributeSet, int, int);
+    public <init>();
+}
+
+-keepclassmembers class androidx.recyclerview.widget.RecyclerView {
+    public void suppressLayout(boolean);
+    public boolean isLayoutSuppressed();
+}
+# End of content from /Users/siddhants/.gradle/caches/transforms-3/d40cf591b2d1674087caabe402d9f2ee/transformed/recyclerview-1.2.1/proguard.txt
+# The proguard configuration file for the following section is /Users/siddhants/.gradle/caches/transforms-3/c5478d714e19ebe595b852fa82bdb5e1/transformed/coordinatorlayout-1.1.0/proguard.txt
+# Copyright (C) 2016 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# CoordinatorLayout resolves the behaviors of its child components with reflection.
+-keep public class * extends androidx.coordinatorlayout.widget.CoordinatorLayout$Behavior {
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>();
+}
+
+# Make sure we keep annotations for CoordinatorLayout's DefaultBehavior and ViewPager's DecorView
+-keepattributes *Annotation*
+
+# End of content from /Users/siddhants/.gradle/caches/transforms-3/c5478d714e19ebe595b852fa82bdb5e1/transformed/coordinatorlayout-1.1.0/proguard.txt
+# The proguard configuration file for the following section is /Users/siddhants/.gradle/caches/transforms-3/ad797b2c409c1214360494b979659609/transformed/transition-1.2.0/proguard.txt
+# Copyright (C) 2017 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Keep a field in transition that is used to keep a reference to weakly-referenced object
+-keepclassmembers class androidx.transition.ChangeBounds$* extends android.animation.AnimatorListenerAdapter {
+  androidx.transition.ChangeBounds$ViewBounds mViewBounds;
+}
+
+# End of content from /Users/siddhants/.gradle/caches/transforms-3/ad797b2c409c1214360494b979659609/transformed/transition-1.2.0/proguard.txt
+# The proguard configuration file for the following section is <unknown>
+-dontoptimize
+-keep class * {*;}
+-keep interface * {*;}
+-keep enum * {*;}
+-keepattributes *
+# End of content from <unknown>
+# The proguard configuration file for the following section is <unknown>
+-applymapping "/Users/siddhants/lambdatest/detox-setup/Detox/examples/demo-react-native/android/app/build/outputs/mapping/release/mapping.txt"
+# End of content from <unknown>

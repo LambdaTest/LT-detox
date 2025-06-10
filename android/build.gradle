@@ -1,0 +1,48 @@
+buildscript {
+    apply from: '../../../detox/android/rninfo.gradle'
+
+    ext {
+        kotlinVersion = '1.8.22'
+        buildToolsVersion = '34.0.0'
+        compileSdkVersion = 34
+        targetSdkVersion = 34
+        minSdkVersion = 21
+    }
+
+    repositories {
+        mavenCentral()
+        google()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.facebook.react:react-native-gradle-plugin"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "$rootDir/../node_modules/detox/Detox-android"
+        }
+    }
+}
+
+subprojects {
+    // Apply common configurations to all sub-projects
+    afterEvaluate { project ->
+        if (project.hasProperty("android")) {
+            project.android {
+                buildToolsVersion = rootProject.ext.buildToolsVersion
+            }
+        }
+    }
+}
+
+if (ext.rnInfo.isRN73OrHigher) {
+    apply plugin: "com.facebook.react.rootproject"
+}
+

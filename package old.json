@@ -1,0 +1,44 @@
+{
+  "name": "example",
+  "version": "20.28.0",
+  "private": true,
+  "scripts": {
+    "start": "react-native start",
+    "bloat-bundle": "node scripts/bloatBundle.mjs",
+    "build:ios": "detox build --configuration ios.sim.debug",
+    "build:ios-debug": "detox build --configuration ios.sim.debug",
+    "build:ios-release": "detox build --configuration ios.sim.release",
+    "build:android-debug": "detox build --configuration android.emu.debug",
+    "build:android-release": "detox build --configuration android.emu.release",
+    "test:ios": "detox test --configuration ios.sim.debug",
+    "test:ios-debug": "detox test --configuration ios.sim.debug",
+    "test:ios-release": "detox test --configuration ios.sim.release",
+    "test:android-debug": "detox test --configuration android.emu.debug",
+    "test:android-release": "detox test --configuration android.att.release",
+    "test:lambdatest-android": "detox test --configuration lambdatest",
+    "e2e:ios": "npm run build:ios-release && npm run test:ios-release",
+    "e2e:android": "npm run build:android-release && npm run test:android-release",
+    "podInstall:ios": "cd ios && bundle exec pod install",
+    "clean:android": "pushd android && ./gradlew clean && popd"
+  },
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.21.0",
+    "react": "18.2.0",
+    "react-native": "0.73.2",
+    "tslib": "^2.0.3"
+  },
+  "devDependencies": {
+    "@babel/preset-react": "^7.23.3",
+    "@react-native/babel-preset": "0.73.19",
+    "@react-native/metro-config": "^0.73.2",
+    "@tsconfig/react-native": "^2.0.2",
+    "@types/fs-extra": "^9.0.13",
+    "@types/jest": "^29.2.1",
+    "@types/react": "^18.0.24",
+    "detox": "^20.28.0",
+    "fs-extra": "^9.1.0",
+    "jest": "^29.6.3",
+    "ts-jest": "^29.0.3",
+    "typescript": "^5.0.4"
+  }
+}
