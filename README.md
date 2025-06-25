@@ -109,21 +109,74 @@ This script runs the actual tests with the specified configuration.
 Run your tests using HyperExecute CLI:
 
 ```bash
+# For sequential test execution
 ./hyperexecute --user $LT_USERNAME --key $LT_ACCESS_KEY --config yaml/hyperexecute.yaml
+
+# For parallel test execution
+./hyperexecute --user $LT_USERNAME --key $LT_ACCESS_KEY --config yaml/hyperexecuteParallel.yaml
 ```
 
-The test script that will be executed is defined in `package.json`:
+The test scripts that will be executed are defined in `package.json`:
 ```json
 {
   "scripts": {
-    "test:lambdatest-android": "detox test --configuration lambdatest --loglevel trace --debug-synchronization 10000"
+    "test:lambdatest-android": "detox test --configuration lambdatest --loglevel trace --debug-synchronization 10000",
+    "test:firstTest": "detox test --configuration lambdatest --testNamePattern='should have welcome screen' --loglevel trace --debug-synchronization 10000",
+    "test:secondTest": "detox test --configuration lambdatest --testNamePattern='should show hello screen after tap' --loglevel trace --debug-synchronization 10000",
+    "test:thirdTest": "detox test --configuration lambdatest --testNamePattern='should show goodbye screen after tap' --loglevel trace --debug-synchronization 10000"
   }
 }
 ```
 
+### 3. Parallel Test Execution
+The project supports running tests in parallel using HyperExecute. This is configured through:
 
+1. `yaml/hyperexecuteParallel.yaml`:
+   - Sets concurrency level (3 parallel devices)
+   - Configures test reporting
+   - Defines test discovery and execution settings
 
+2. `lambdatest/discoveryParallel.txt`:
+   - Lists the test scripts to be executed in parallel:
+     ```
+     test:firstTest
+     test:secondTest
+     test:thirdTest
+     ```
 
+### 4. Test Reports
+The project is configured to generate both HTML and JUnit test reports:
+
+1. HTML Reports:
+   - Generated using `jest-html-reporter`
+   - Available at `reports/test-report.html`
+   - Includes detailed test results and failure messages
+
+2. JUnit Reports:
+   - Generated using `jest-junit`
+   - Available at `reports/junit.xml`
+   - Useful for CI/CD integration
+
+The reporting configuration is managed in `e2e/jest.config.js`:
+```javascript
+reporters: [
+  "detox/runners/jest/reporter",
+  ["jest-html-reporter", {
+    "pageTitle": "Detox Test Report",
+    "outputPath": "./reports/test-report.html",
+    "includeFailureMsg": true
+  }],
+  ["jest-junit", {
+    "outputDirectory": "./reports",
+    "outputName": "junit.xml",
+    "ancestorSeparator": " › ",
+    "uniqueOutputName": "false",
+    "suiteNameTemplate": "{filepath}",
+    "classNameTemplate": "{classname}",
+    "titleTemplate": "{title}"
+  }]
+]
+```
 
 ## View Test Results
 1. Visit [LambdaTest Dashboard](https://automation.lambdatest.com/build)

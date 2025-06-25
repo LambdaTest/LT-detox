@@ -11,6 +11,22 @@ module.exports = {
   transform: {
     "\\.tsx?$": "ts-jest"
   },
-  reporters: ["detox/runners/jest/reporter"],
+  reporters: [
+    "detox/runners/jest/reporter",
+    ["jest-html-reporter", {
+      "pageTitle": "Detox Test Report",
+      "outputPath": "./reports/test-report.html",
+      "includeFailureMsg": true
+    }],
+    ["jest-junit", {
+      "outputDirectory": "./reports",
+      "outputName": "junit.xml",
+      "ancestorSeparator": " › ",
+      "uniqueOutputName": "false",
+      "suiteNameTemplate": "{filepath}",
+      "classNameTemplate": "{classname}",
+      "titleTemplate": "{title}"
+    }]
+  ],
   verbose: true
 };
