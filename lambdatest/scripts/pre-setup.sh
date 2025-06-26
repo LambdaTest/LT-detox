@@ -27,8 +27,8 @@ nvm install 18
 nvm use 18
 
 # Step 5: Navigate to the project directory and install dependencies
-cd /home/ltuser/foreman/LT-Detox || {
-    echo "Error: Directory /home/ltuser/foreman/LT-Detox does not exist."
+cd /home/ltuser/foreman/LT-detox || {
+    echo "Error: Directory /home/ltuser/foreman/LT-detox does not exist."
     exit 1
 }
 npm install
