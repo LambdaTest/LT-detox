@@ -6,6 +6,9 @@
     "start": "react-native start",
     "bloat-bundle": "node scripts/bloatBundle.mjs",
     "test:lambdatest-android": "detox test --configuration lambdatest --loglevel trace --debug-synchronization 10000",
+    "test:firstTest": "detox test --configuration lambdatest --testNamePattern='should have welcome screen' --loglevel trace --debug-synchronization 10000",
+    "test:secondTest": "detox test --configuration lambdatest --testNamePattern='should show hello screen after tap' --loglevel trace --debug-synchronization 10000",
+    "test:thirdTest": "detox test --configuration lambdatest --testNamePattern='should show goodbye screen after tap' --loglevel trace --debug-synchronization 10000",
     "e2e:android": "npm run build:android-release && npm run test:android-release",
     "clean:android": "pushd android && ./gradlew clean && popd"
   },
@@ -27,6 +30,8 @@
     "fs-extra": "^9.1.0",
     "jest": "^29.6.3",
     "ts-jest": "^29.0.3",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "jest-html-reporter": "^4.2.0",
+    "jest-junit": "^16.0.0"
   }
 }

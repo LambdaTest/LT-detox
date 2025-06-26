@@ -1,0 +1,63 @@
+autosplit: true
+
+# Set the concurrency level for test execution (2 devices in parallel)
+concurrency: 3
+
+report: true
+partialReports:
+    # frameworkName: junit
+    location: reports/
+    type: html
+
+framework:
+    # Name of the test framework (raw in this case)
+    name: raw
+    args:
+        buildName: LT-Detox-Sample-Parallel
+        deviceLogs: true
+        devices: 
+            - .*-.*
+            - .*-.*
+            - .*-.*
+        disableReleaseDevice: true
+        env:
+            DETOX: true #detox
+        isRealMobile: true
+        mobileDC: true
+        platformName: android
+        privateCloud: true #private cloud
+        queueTimeout: 600
+
+        # Enable or disable video recording support
+        video: true
+
+
+# Make test status as HyperExecute job's status
+frameworkStatusOnly: true
+
+# job label for hyperexecute job
+jobLabel: ['raw','detox','parallel']
+
+# Pre-install required dependencies from pre-setup scripts
+pre:
+    - bash ./lambdatest/scripts/pre-setup.sh
+
+# Specify the target platform for test execution (Android in this case)
+runson: android
+
+
+# Test discovery configuration
+testDiscovery:
+    # Command to discover tests from the discovery.txt file
+    command: cat ./lambdatest/discoveryParallel.txt 
+    # Test discovery mode is static
+    mode: static 
+    # Test type is raw (custom test implementation)
+    type: raw
+
+
+# Command to run the tests using the testRunnerCommand
+testRunnerCommand: bash ./lambdatest/scripts/execute.sh $test
+
+# Define the version of the configuration file
+version: "0.2"
