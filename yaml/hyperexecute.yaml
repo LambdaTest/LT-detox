@@ -17,12 +17,11 @@ framework:
         isRealMobile: true
         mobileDC: true
         platformName: android
-        privateCloud: true #private cloud
+        # privateCloud: true # use this for private cloud
         queueTimeout: 600
 
         # Enable or disable video recording support
         video: true
-
 
 # Make test status as HyperExecute job's status
 frameworkStatusOnly: true
@@ -47,7 +46,7 @@ testDiscovery:
     type: raw
 
 # Command to run the tests using the testRunnerCommand
-testRunnerCommand: bash ./lambdatest/scripts/execute.sh $test
+testRunnerCommand: npm run $test
 
 # Define the version of the configuration file
 version: "0.2"
