@@ -27,9 +27,10 @@ framework:
         platformName: android
         # privateCloud: true # use this for private cloud
         queueTimeout: 600
-
         # Enable or disable video recording support
         video: true
+        network: true # use this for network logs
+        # tunnel: true  # use this to run your tests via tunnel
 
 # Make test status as HyperExecute job's status
 frameworkStatusOnly: true
