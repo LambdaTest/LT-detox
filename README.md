@@ -1,5 +1,5 @@
-# LT-Detox
-Run your Detox tests on LambdaTest Real Device Cloud Platform using HyperExecute.
+# LT-Detox — TestMu AI (Formerly LambdaTest)
+Run your Detox tests on TestMu AI Real Device Cloud Platform using HyperExecute.
 
 ## Prerequisites
 1. Clone this repository
@@ -7,7 +7,7 @@ Run your Detox tests on LambdaTest Real Device Cloud Platform using HyperExecute
    - Node.js 18 (required)
    - npm (comes with Node.js)
    - React Native development environment
-   - [HyperExecute CLI](https://www.lambdatest.com/hyperexecute)
+   - [HyperExecute CLI](https://www.testmuai.com/hyperexecute)
 
 ## Setting up the Environment
 
@@ -25,8 +25,8 @@ nvm install 18
 nvm use 18
 ```
 
-### 2. Set LambdaTest Credentials
-Export your LambdaTest credentials. You can get these from your [LambdaTest Profile](https://accounts.lambdatest.com/detail/profile)
+### 2. Set TestMu AI Credentials
+Export your TestMu AI credentials. You can get these from your [TestMu AI Profile](https://accounts.lambdatest.com/detail/profile)
 
 ```bash
 export LT_USERNAME="your_username"
@@ -62,7 +62,7 @@ npm install
 ```
 
 ### 2. Configure Detox
-The project includes a `detox.config.js` file configured for LambdaTest:
+The project includes a `detox.config.js` file configured for TestMu AI:
 
 ```javascript
 module.exports = {
@@ -179,15 +179,34 @@ reporters: [
 ```
 
 ## View Test Results
-1. Visit [LambdaTest Dashboard](https://automation.lambdatest.com/build)
+1. Visit [TestMu AI Dashboard](https://automation.lambdatest.com/build)
 2. Find your test execution
 3. View detailed reports, screenshots, and logs
 
 ## Additional Resources
-* [LambdaTest Documentation](https://www.lambdatest.com/support/docs/)
-* [HyperExecute Documentation](https://www.lambdatest.com/support/docs/hyperexecute-cli-run-tests/)
-* [LambdaTest Blog](https://www.lambdatest.com/blog/)
-* [LambdaTest Community](https://community.lambdatest.com/)
+* [TestMu AI Documentation](https://www.testmuai.com/support/docs/)
+* [HyperExecute Documentation](https://www.testmuai.com/support/docs/hyperexecute-cli-run-tests/)
+* [TestMu AI Blog](https://www.testmuai.com/blog/)
+* [TestMu AI Community](https://community.testmuai.com/)
 
 ## Reporting Issues
 If you face any issues while running the tests, please report them in the [issues section](https://github.com/LambdaTest/LT-detox/issues).
+
+## 🚀 [LambdaTest is Now TestMu AI](https://www.testmuai.com/lambdatest-is-now-testmuai/)
+
+👋 Welcome to TestMu AI, the next evolution of LambdaTest. As of January 2026, LambdaTest has officially rebranded to TestMu AI. We have evolved from a cross-browser testing cloud into a unified, AI-native quality engineering platform designed for the modern DevOps era.
+
+Whether you have been part of the LambdaTest community for years or are just discovering TestMu AI, our mission remains the same: to help you ship faster with high-scale test execution, autonomous testing, and deep quality analytics.
+
+**🔄 Our Rebrand Journey**
+
+We chose the name TestMu AI to reflect our shift towards intelligent, autonomous testing. While our identity has changed, our core technology and commitment to the testing community stay the same.
+
+**✨ Specialties**
+
+- 🤖 AI-Native Test Execution (Formerly LambdaTest)
+- ⚡ Autonomous Test Automation
+- 🌐 Cross-Browser & Mobile Testing
+- 📊 Unified Quality Intelligence
+
+👉 Find [LambdaTest's New Home](https://www.testmuai.com/).
