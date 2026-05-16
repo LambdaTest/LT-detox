@@ -1,193 +1,112 @@
-# LT-Detox
-Run your Detox tests on LambdaTest Real Device Cloud Platform using HyperExecute.
+# Run Detox Tests on HyperExecute with TestMu AI (Formerly LambdaTest)
 
-## Prerequisites
-1. Clone this repository
-2. Ensure you have the following installed:
-   - Node.js 18 (required)
-   - npm (comes with Node.js)
-   - React Native development environment
-   - [HyperExecute CLI](https://www.lambdatest.com/hyperexecute)
+<p align="center">
+  <a href="https://www.testmuai.com/"><img src="https://img.shields.io/badge/MADE%20BY%20TestMu%20AI-000000.svg?style=for-the-badge&labelColor=000" alt="Made by TestMu AI"></a>
+  <a href="https://www.npmjs.com/package/detox"><img src="https://img.shields.io/npm/v/detox.svg?style=for-the-badge&labelColor=000000" alt="Detox version"></a>
+  <a href="https://community.testmuai.com/"><img src="https://img.shields.io/badge/Join%20the%20community-blueviolet.svg?style=for-the-badge&labelColor=000000" alt="Community"></a>
+</p>
 
-## Setting up the Environment
+## Getting Started
 
-### 1. Install Node.js 18 using nvm
-```bash
-# Install nvm if you haven't already
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+[TestMu AI](https://www.testmuai.com/) (Formerly LambdaTest) is the world's first full-stack AI Agentic Quality Engineering platform that empowers teams to test intelligently, smarter, and ship faster. Built for scale, it offers a full-stack testing cloud with 10K+ real devices and 3,000+ browsers. With AI-native test management, MCP servers, and agent-based automation, TestMu AI supports Selenium, Appium, Playwright, and all major frameworks. 
 
-# Load nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+With TestMu AI (Formerly LambdaTest), you can run Detox mobile tests on HyperExecute — the smart test orchestration platform for fastest execution. This sample shows how to configure Detox tests to run on HyperExecute.
 
-# Install and use Node.js 18
-nvm install 18
-nvm use 18
-```
+- [Sign up on TestMu AI](https://www.testmuai.com/register/) (Formerly LambdaTest).
+- Follow the [TestMu AI Documentation](https://www.testmuai.com/support/docs/) for the full setup walkthrough.
 
-### 2. Set LambdaTest Credentials
-Export your LambdaTest credentials. You can get these from your [LambdaTest Profile](https://accounts.lambdatest.com/detail/profile)
+### Prerequisites
+
+- Node.js and npm (latest stable)
+- HyperExecute CLI binary (download from https://www.testmuai.com/support/docs/getting-started-with-hyperexecute/)
+- A TestMu AI (Formerly LambdaTest) account with your username and access key
+
+### Setup
+
+Clone and install dependencies:
 
 ```bash
-export LT_USERNAME="your_username"
-export LT_ACCESS_KEY="your_access_key"
-```
-
-### 3. Download HyperExecute CLI
-
-#### For Mac:
-```bash
-curl -O https://downloads.lambdatest.com/hyperexecute/darwin/hyperexecute
-chmod +x hyperexecute
-```
-
-#### For Linux:
-```bash
-curl -O https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute
-chmod +x hyperexecute
-```
-
-#### For Windows:
-```bash
-curl -O https://downloads.lambdatest.com/hyperexecute/windows/hyperexecute.exe
-```
-
-## Project Setup
-
-### 1. Install Dependencies
-Install the project dependencies:
-
-```bash
+git clone https://github.com/LambdaTest/LT-detox && cd LT-detox
 npm install
 ```
 
-### 2. Configure Detox
-The project includes a `detox.config.js` file configured for LambdaTest:
+Set your credentials as environment variables.
 
-```javascript
-module.exports = {
-  apps: { 
-    "android.release": {
-      "type": "android.apk",
-      "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
-      "build": "cd android ; ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release ; cd -"
-    }
-  },
-  devices: {
-    "hyperexecute.raw.device": {
-      type: 'android.attached',
-      device: {
-        adbName: '.*'
-      }
-    }
-  },
-  configurations: {
-    "lambdatest": {
-      "device": "hyperexecute.raw.device",
-      "app": "android.release"
-    }
-  }
-};
-```
-
-## Running Tests on HyperExecute
-
-### 1. Setup Test Scripts
-The test execution is managed by two scripts in the `lambdatest/scripts` directory:
-
-#### pre-setup.sh
-This script handles the environment setup:
-- Installs and configures nvm
-- Sets up Node.js 18
-- Configures Android SDK
-- Installs project dependencies
-
-#### execute.sh
-This script runs the actual tests with the specified configuration.
-
-### 2. Execute Tests
-Run your tests using HyperExecute CLI:
+**macOS / Linux:**
 
 ```bash
-# For sequential test execution
+export LT_USERNAME="YOUR_USERNAME"
+export LT_ACCESS_KEY="YOUR_ACCESS_KEY"
+```
+
+**Windows:**
+
+```bash
+set LT_USERNAME="YOUR_USERNAME"
+set LT_ACCESS_KEY="YOUR_ACCESS_KEY"
+```
+
+### Run tests
+
+```bash
 ./hyperexecute --user $LT_USERNAME --key $LT_ACCESS_KEY --config yaml/hyperexecute.yaml
-
-# For parallel test execution
-./hyperexecute --user $LT_USERNAME --key $LT_ACCESS_KEY --config yaml/hyperexecuteParallel.yaml
 ```
 
-The test scripts that will be executed are defined in `package.json`:
-```json
-{
-  "scripts": {
-    "test:lambdatest-android": "detox test --configuration lambdatest --loglevel trace --debug-synchronization 10000",
-    "test:firstTest": "detox test --configuration lambdatest --testNamePattern='should have welcome screen' --loglevel trace --debug-synchronization 10000",
-    "test:secondTest": "detox test --configuration lambdatest --testNamePattern='should show hello screen after tap' --loglevel trace --debug-synchronization 10000",
-    "test:thirdTest": "detox test --configuration lambdatest --testNamePattern='should show goodbye screen after tap' --loglevel trace --debug-synchronization 10000"
-  }
-}
+View results on your TestMu AI dashboard.
+
+### Local testing with TestMu AI Tunnel
+
+To test locally hosted apps, set up the TestMu AI tunnel. OS-specific guides:
+
+- [Local Testing on Windows](https://www.testmuai.com/support/docs/local-testing-for-windows/)
+- [Local Testing on macOS](https://www.testmuai.com/support/docs/local-testing-for-macos/)
+- [Local Testing on Linux](https://www.testmuai.com/support/docs/local-testing-for-linux/)
+
+Add the following to your capabilities:
+
+```js
+tunnel: true,
 ```
 
-### 3. Parallel Test Execution
-The project supports running tests in parallel using HyperExecute. This is configured through:
+## Contributions
 
-1. `yaml/hyperexecuteParallel.yaml`:
-   - Sets concurrency level (3 parallel devices)
-   - Configures test reporting
-   - Defines test discovery and execution settings
+Contributions are welcome. Open an issue to discuss your idea before submitting a pull request. When reporting bugs, include your Node.js version, OS, and Detox version.
 
-2. `lambdatest/discoveryParallel.txt`:
-   - Lists the test scripts to be executed in parallel:
-     ```
-     test:firstTest
-     test:secondTest
-     test:thirdTest
-     ```
+## TestMu AI (Formerly LambdaTest) Community
 
-### 4. Test Reports
-The project is configured to generate both HTML and JUnit test reports:
+Connect with testers and developers in the [TestMu AI Community](https://community.testmuai.com/). Ask questions, share what you are building, and discuss best practices in test automation and DevOps.
+  
+## TestMu AI (Formerly LambdaTest) Certifications
 
-1. HTML Reports:
-   - Generated using `jest-html-reporter`
-   - Available at `reports/test-report.html`
-   - Includes detailed test results and failure messages
+Earn free [TestMu AI Certifications](https://www.testmuai.com/certifications/) for testers, developers, and QA engineers. Validate your skills in Selenium, Cypress, Playwright, Appium, Espresso and more. Industry-recognized, shareable on LinkedIn, and built by practitioners, not marketers.
 
-2. JUnit Reports:
-   - Generated using `jest-junit`
-   - Available at `reports/junit.xml`
-   - Useful for CI/CD integration
+## Learning Resources by TestMu AI (Formerly LambdaTest)
 
-The reporting configuration is managed in `e2e/jest.config.js`:
-```javascript
-reporters: [
-  "detox/runners/jest/reporter",
-  ["jest-html-reporter", {
-    "pageTitle": "Detox Test Report",
-    "outputPath": "./reports/test-report.html",
-    "includeFailureMsg": true
-  }],
-  ["jest-junit", {
-    "outputDirectory": "./reports",
-    "outputName": "junit.xml",
-    "ancestorSeparator": " › ",
-    "uniqueOutputName": "false",
-    "suiteNameTemplate": "{filepath}",
-    "classNameTemplate": "{classname}",
-    "titleTemplate": "{title}"
-  }]
-]
-```
+Learn modern testing through tutorials, guides, videos, and weekly updates:
 
-## View Test Results
-1. Visit [LambdaTest Dashboard](https://automation.lambdatest.com/build)
-2. Find your test execution
-3. View detailed reports, screenshots, and logs
+* [TestMu AI Blog](https://www.testmuai.com/blog/)
+* [TestMu AI Learning Hub](https://www.testmuai.com/learning-hub/)
+* [TestMu AI on YouTube](https://www.youtube.com/@TestMuAI)
+* [TestMu AI Newsletter](https://www.testmuai.com/newsletter/)
+  
+## LambdaTest is Now TestMu AI
 
-## Additional Resources
-* [LambdaTest Documentation](https://www.lambdatest.com/support/docs/)
-* [HyperExecute Documentation](https://www.lambdatest.com/support/docs/hyperexecute-cli-run-tests/)
-* [LambdaTest Blog](https://www.lambdatest.com/blog/)
-* [LambdaTest Community](https://community.lambdatest.com/)
+On **January 12, 2026**, [LambdaTest evolved to TestMu AI](https://www.testmuai.com/lambdatest-is-now-testmuai/), the world's first fully autonomous **Agentic AI Quality Engineering Platform**.
 
-## Reporting Issues
-If you face any issues while running the tests, please report them in the [issues section](https://github.com/LambdaTest/LT-detox/issues).
+Same team. Same infrastructure. Same customer accounts. All existing LambdaTest logins, scripts, capabilities, and integrations continue to work without change.
+
+👉 Find the new home for [LambdaTest](https://www.testmuai.com).
+
+### How LambdaTest Evolved into TestMu AI
+
+In 2017, we launched LambdaTest with a simple mission: make testing fast, reliable, and accessible. As LambdaTest grew, we expanded into Test Intelligence, Visual Regression Testing, Accessibility Testing, API Testing, and Performance Testing, covering the full depth of the testing lifecycle.
+
+As software development entered the AI era, testing had to evolve, too. We rebuilt the architecture to be AI-native from the ground up, with autonomous agents that **plan, author, execute, analyze, and optimize tests** while keeping humans in the loop. The platform integrates with your repos, CI, IDEs, and terminals, continuously learning from every code change and development signal.
+
+That evolution earned a new name: **TestMu AI**, built for an AI-first future of quality engineering. TestMu is not a new name for us. It is the name of our annual community conference, which has brought together 100,000+ quality engineers to discuss how AI would reshape testing, long before that became an industry norm. 
+
+What started as a high-performance cloud testing platform has transformed into an AI-native, multi-agent system powering a connected, end-to-end quality layer. That evolution defined a new identity: LambdaTest evolved into TestMu AI, built for an AI-first future of quality engineering.
+
+## Support
+
+Got a question? Email [support@testmuai.com](mailto:support@testmuai.com) or chat with us 24x7 from our chat portal.
