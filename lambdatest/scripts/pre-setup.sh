@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Enable debugging for troubleshooting (optional) 
+# Enable debugging for troubleshooting (optional)
 set -e
 
 # Step 1: Install nvm
@@ -19,16 +19,40 @@ if [ -s "$NVM_DIR/bash_completion" ]; then
     . "$NVM_DIR/bash_completion" # Load nvm bash completion (optional)
 fi
 
-# Step 3: Add Android SDK to PATH
-export ANDROID_HOME=/usr/lib/android-sdk
+# (Optional) Use Node version from .nvmrc if present
+if [ -f ".nvmrc" ]; then
+  nvm install
+  nvm use
+else
+  nvm install 18
+  nvm use 18
+fi
 
-# Step 4: Install and use Node.js version 18
-nvm install 18
-nvm use 18
+# Keep node_modules, vendor/bundle, and ios/Pods so HyperExecute cache can be reused.
+# Still wipe Xcode output; it is machine-specific and not cached.
+rm -rf ios/build
+rm -rf ~/Library/Developer/Xcode/DerivedData
+rm -rf ios/.xcode.env*
 
-# Step 5: Navigate to the project directory and install dependencies
-cd /home/ltuser/foreman/LT-detox || {
-    echo "Error: Directory /home/ltuser/foreman/LT-detox does not exist."
-    exit 1
-}
+# Step 3: Set ruby 3.2.2 as global version
+eval "$(rbenv init -)"
+rbenv global 3.2.2
+
+echo "verify ruby version"
+ruby -v
+export LANG=en_US.UTF-8
+
+gem install bundler:2.6.8  
+bundle install --path vendor/bundle
+
 npm install
+npm install --save-dev @react-native-community/cli
+
+npm run podInstall:ios
+
+echo "Current directory: $PWD"
+ls -la "$PWD"
+
+PROJECT_DIR="$PWD"
+echo "Using project directory: $PROJECT_DIR"
+cd "$PROJECT_DIR"

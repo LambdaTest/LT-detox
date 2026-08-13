@@ -1,0 +1,9 @@
+node_modules/
+./hyperexecute-code*
+ios/build
+ios/.xcode.env*
+.expo/
+vendor/
+artifacts/
+reports/
+coverage/

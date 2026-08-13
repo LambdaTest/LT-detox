@@ -1,37 +1,40 @@
 autosplit: true
-
-# Set the concurrency level for test execution (2 devices in parallel)
+captureScreenRecordingForScenarios: true
 concurrency: 1
-
+env:
+  DETOX: true 
 framework:
     # Name of the test framework (raw in this case)
     name: raw
     args:
-        buildName: LT-Detox-Sample
+        buildName: LT-Detox-RD-Android
         deviceLogs: true
         devices: 
-            - .*-.*
+            - .*-13
         disableReleaseDevice: true
         env:
             DETOX: true #detox
         isRealMobile: true
         mobileDC: true
         platformName: android
-        # privateCloud: true # use this for private cloud
         queueTimeout: 600
-
-        # Enable or disable video recording support
         video: true
+
+cacheKey: '{{ checksum "package-lock.json" }}'
+cacheDirectories:
+    - node_modules
+    - vendor/bundle
+    - ios/Pods
 
 # Make test status as HyperExecute job's status
 frameworkStatusOnly: true
 
 # job label for hyperexecute job
-jobLabel: ['raw','detox']
+jobLabel: ['Hyperexecute','detox', 'Android-RealDevice']
 
 # Pre-install required dependencies from pre-setup scripts
 pre:
-    - bash ./lambdatest/scripts/pre-setup.sh
+    - bash ./lambdatest/scripts/pre-setup-ad.sh
 
 # Specify the target platform for test execution (Android in this case)
 runson: android

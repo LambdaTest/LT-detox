@@ -38,8 +38,9 @@ local.properties
 *.keystore
 !debug.keystore
 
-# Keep the release APKs
+# Keep the release APKs used by HyperExecute Android jobs
 !android/app/build/outputs/apk/release/app-release.apk
+!android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk
 !lambdatest/apps/app-release.apk
 !lambdatest/apps/testApp/app-release-androidTest.apk
 
