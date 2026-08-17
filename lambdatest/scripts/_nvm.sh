@@ -8,11 +8,16 @@ export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
 _LT_NVM_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 _LT_REPO_ROOT="$(cd "$_LT_NVM_SCRIPT_DIR/../.." && pwd)"
 
-if [ ! -s "$NVM_DIR/nvm.sh" ]; then
+_lt_nvm_head() {
+  git -C "$NVM_DIR" rev-parse HEAD 2>/dev/null || true
+}
+
+if [ "$(_lt_nvm_head)" != "$NVM_COMMIT" ]; then
+  rm -rf "$NVM_DIR"
   git clone --branch "$NVM_TAG" --depth 1 https://github.com/nvm-sh/nvm.git "$NVM_DIR"
-  _LT_NVM_HEAD="$(git -C "$NVM_DIR" rev-parse HEAD)"
-  if [ "$_LT_NVM_HEAD" != "$NVM_COMMIT" ]; then
-    echo "Error: nvm SHA mismatch (expected $NVM_COMMIT, got $_LT_NVM_HEAD)" >&2
+  if [ "$(_lt_nvm_head)" != "$NVM_COMMIT" ]; then
+    echo "Error: nvm SHA mismatch (expected $NVM_COMMIT, got $(_lt_nvm_head))" >&2
+    rm -rf "$NVM_DIR"
     exit 1
   fi
 fi
@@ -24,7 +29,9 @@ if [ -s "$NVM_DIR/bash_completion" ]; then
   . "$NVM_DIR/bash_completion"
 fi
 
-# nvm install with no args reads .nvmrc from the current directory.
+# Honour .nvmrc from the repo root. Keep npm's download cache in-tree so
+# HyperExecute can restore it (npm ci always rebuilds node_modules).
+export npm_config_cache="${_LT_REPO_ROOT}/.npm"
 pushd "$_LT_REPO_ROOT" >/dev/null
 nvm install
 nvm use

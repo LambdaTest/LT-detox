@@ -9,6 +9,10 @@ yarn-error.log
 
 # Ruby
 vendor/
+.bundle/
+
+# npm download cache used by HyperExecute jobs
+.npm/
 
 # Xcode
 *.pbxuser

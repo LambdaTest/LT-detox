@@ -31,7 +31,7 @@ frameworkStatusOnly: true
 
 cacheKey: '{{ checksum "package-lock.json" }}'
 cacheDirectories:
-    - node_modules
+    - .npm
 
 # Pre-install required dependencies from pre-setup scripts
 pre:

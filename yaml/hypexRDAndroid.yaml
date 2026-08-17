@@ -1,5 +1,4 @@
 autosplit: true
-captureScreenRecordingForScenarios: true
 concurrency: 1
 env:
   DETOX: true
@@ -20,7 +19,7 @@ framework:
 
 cacheKey: '{{ checksum "package-lock.json" }}'
 cacheDirectories:
-    - node_modules
+    - .npm
 
 # Make test status as HyperExecute job's status
 frameworkStatusOnly: true

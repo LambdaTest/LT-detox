@@ -1,6 +1,5 @@
 autosplit: true
 concurrency: 1
-captureScreenRecordingForScenarios: true
 
 env:
   DETOX: true
@@ -22,7 +21,7 @@ frameworkStatusOnly: true
 jobLabel: ['Hyperexecute','detox', 'iOS-Simulator']
 cacheKey: '{{ checksum "package-lock.json" }}'
 cacheDirectories:
-    - node_modules
+    - .npm
     - vendor/bundle
     - ios/Pods
 pre:
