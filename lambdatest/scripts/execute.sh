@@ -1,29 +1,23 @@
 #!/bin/bash
-# Enable debugging for troubleshooting
-set -e
+set -euo pipefail
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=./_nvm.sh
+. "$SCRIPT_DIR/_nvm.sh"
 
-
-# Install and use Node.js
-NODE_VERSION="18"
-nvm use $NODE_VERSION
-# Set NODE_BINARY for Xcode
-NODE_BINARY=$(command -v node)
-# Clean Xcode environment
-unset XCODE_ENV_FILE
-echo "export NODE_BINARY=$NODE_BINARY" | tee .xcode.env .xcode.env.local
-
-echo "✅ Using Node: $(node -v) from $(which node)"
+echo "✅ Using Node: $(node -v) from $(command -v node)"
 echo "✅ Using Xcode: $(xcodebuild -version)"
-echo "✅ Enforcing NODE_BINARY=$NODE_BINARY"
 
 # Attach Detox to HyperExecute's already-booted (video-recorded) simulator.
 if [ -z "${DETOX_SIM_UDID:-}" ]; then
-  DETOX_SIM_UDID=$(xcrun simctl list devices | awk -F '[()]' '/\(Booted\)/{print $2; exit}')
+  _SIMCTL_JSON=$(xcrun simctl list devices booted -j)
+  if command -v jq >/dev/null 2>&1; then
+    DETOX_SIM_UDID=$(printf '%s' "$_SIMCTL_JSON" | jq -r '[.devices[][].udid] | first // empty')
+  else
+    DETOX_SIM_UDID=$(printf '%s' "$_SIMCTL_JSON" | python3 -c 'import json,sys; d=json.load(sys.stdin); ids=[dev["udid"] for runtime in d.get("devices",{}).values() for dev in runtime]; print(ids[0] if ids else "")')
+  fi
   export DETOX_SIM_UDID
+  unset _SIMCTL_JSON
 fi
 if [ -n "${DETOX_SIM_UDID:-}" ]; then
   echo "✅ Using booted simulator UDID=$DETOX_SIM_UDID"
@@ -31,10 +25,9 @@ else
   echo "⚠️ No booted simulator found; Detox will boot from detox.config.js device type"
 fi
 
-# Navigate to project directory
-PROJECT_DIR="$PWD"
-echo "Using project directory: $PROJECT_DIR"
-cd "$PROJECT_DIR"
+if [ -z "${1:-}" ]; then
+  echo "usage: execute.sh <npm-script>" >&2
+  exit 1
+fi
 
-# Run the specified npm command
-npm run $1
+npm run "$1"

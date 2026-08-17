@@ -58,11 +58,12 @@ module.exports = {
         headless: false,
         // On HyperExecute, lambdatest/scripts/execute.sh exports DETOX_SIM_UDID for the
         // already-booted (and video-recorded) simulator so Detox attaches to it instead of
-        // booting its own unrecorded one. Falls back to a device type for local runs.
+        // booting its own unrecorded one. Local runs fall back to DETOX_SIM_DEVICE_TYPE
+        // (default iPhone 15) so the type can track whatever Xcode currently ships.
         device: process.env.DETOX_SIM_UDID
           ? { id: process.env.DETOX_SIM_UDID }
           : {
-              type: "iPhone 14",
+              type: process.env.DETOX_SIM_DEVICE_TYPE || "iPhone 15",
             }
       },
       emulator: {

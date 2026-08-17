@@ -3,7 +3,7 @@ concurrency: 1
 captureScreenRecordingForScenarios: true
 
 env:
-  DETOX: true 
+  DETOX: true
 
 framework:
     name: raw
@@ -27,9 +27,14 @@ cacheDirectories:
     - ios/Pods
 pre:
     - bash ./lambdatest/scripts/pre-setup.sh
-runson: ios 
+runson: ios
 testDiscovery:
-    command: cat ./lambdatest/discoveryIOS.txt 
-    mode: static 
+    command: cat ./lambdatest/discoveryIOS.txt
+    mode: static
+    type: raw
 testRunnerCommand: bash ./lambdatest/scripts/execute.sh $test
+report: true
+partialReports:
+    location: reports/
+    type: html
 version: "0.2"

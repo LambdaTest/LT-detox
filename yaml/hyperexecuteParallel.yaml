@@ -1,16 +1,23 @@
+# Define the version of the configuration file
+version: "0.2"
 autosplit: true
-captureScreenRecordingForScenarios: true
-concurrency: 1
+
+# Set the concurrency level for test execution (3 devices in parallel)
+concurrency: 3
+
 env:
   DETOX: true
+
 framework:
     # Name of the test framework (raw in this case)
     name: raw
     args:
-        buildName: LT-Detox-RD-Android
+        buildName: LT-Detox-Sample-Parallel
         deviceLogs: true
         devices:
-            - .*-13
+            - .*-.*
+            - .*-.*
+            - .*-.*
         disableReleaseDevice: true
         isRealMobile: true
         mobileDC: true
@@ -18,15 +25,13 @@ framework:
         queueTimeout: 600
         video: true
 
-cacheKey: '{{ checksum "package-lock.json" }}'
-cacheDirectories:
-    - node_modules
-
 # Make test status as HyperExecute job's status
 frameworkStatusOnly: true
 
-# job label for hyperexecute job
-jobLabel: ['Hyperexecute','detox', 'Android-RealDevice']
+
+cacheKey: '{{ checksum "package-lock.json" }}'
+cacheDirectories:
+    - node_modules
 
 # Pre-install required dependencies from pre-setup scripts
 pre:
@@ -37,8 +42,8 @@ runson: android
 
 # Test discovery configuration
 testDiscovery:
-    # Command to discover tests from the discovery.txt file
-    command: cat ./lambdatest/discovery.txt
+    # Command to discover tests from the discoveryParallel.txt file
+    command: cat ./lambdatest/discoveryParallel.txt
     # Test discovery mode is static
     mode: static
     # Test type is raw (custom test implementation)
@@ -52,5 +57,6 @@ partialReports:
     location: reports/
     type: html
 
-# Define the version of the configuration file
-version: "0.2"
+
+# job label for hyperexecute job
+jobLabel: ['raw','detox','parallel']

@@ -7,3 +7,5 @@ vendor/
 artifacts/
 reports/
 coverage/
+android/app/build/intermediates/
+android/app/build/generated/
