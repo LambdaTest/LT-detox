@@ -13,6 +13,7 @@ vendor/
 
 # npm download cache used by HyperExecute jobs
 .npm/
+.nvm/
 
 # Xcode
 *.pbxuser
