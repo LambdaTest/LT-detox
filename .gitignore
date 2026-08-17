@@ -9,6 +9,10 @@ yarn-error.log
 
 # Ruby
 vendor/
+.bundle/
+
+# npm download cache used by HyperExecute jobs
+.npm/
 
 # Xcode
 *.pbxuser
@@ -38,8 +42,10 @@ local.properties
 *.keystore
 !debug.keystore
 
-# Keep the release APKs
+# HyperExecute Android jobs currently consume these committed APKs.
+# Prefer rebuilding in pre: (or fetching a release asset) rather than adding more binaries.
 !android/app/build/outputs/apk/release/app-release.apk
+!android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk
 !lambdatest/apps/app-release.apk
 !lambdatest/apps/testApp/app-release-androidTest.apk
 

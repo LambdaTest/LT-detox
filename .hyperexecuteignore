@@ -1,0 +1,12 @@
+node_modules/
+./hyperexecute-code*
+ios/build
+.expo/
+vendor/
+.bundle/
+.npm/
+artifacts/
+reports/
+coverage/
+android/app/build/intermediates/
+android/app/build/generated/

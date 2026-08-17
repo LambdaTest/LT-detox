@@ -1,0 +1,39 @@
+autosplit: true
+concurrency: 1
+
+env:
+  DETOX: true
+
+framework:
+    name: raw
+    args:
+        buildName: LT-Detox-iOS-Simulator
+        deviceLogs: true
+        devices: [".*"]
+        disableReleaseDevice: true
+        isRealMobile: false
+        platformName: ios
+        appId: stock
+        queueTimeout: 600
+        video: true
+
+frameworkStatusOnly: true
+jobLabel: ['Hyperexecute','detox', 'iOS-Simulator']
+cacheKey: '{{ checksum "package-lock.json" }}'
+cacheDirectories:
+    - .npm
+    - vendor/bundle
+    - ios/Pods
+pre:
+    - bash ./lambdatest/scripts/pre-setup.sh
+runson: ios
+testDiscovery:
+    command: cat ./lambdatest/discoveryIOS.txt
+    mode: static
+    type: raw
+testRunnerCommand: bash ./lambdatest/scripts/execute.sh $test
+report: true
+partialReports:
+    location: reports/
+    type: html
+version: "0.2"

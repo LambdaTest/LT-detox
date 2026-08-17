@@ -48,8 +48,24 @@ set LT_ACCESS_KEY="YOUR_ACCESS_KEY"
 
 ### Run tests
 
+Download the HyperExecute CLI, then pick one of the three sample YAMLs:
+
+**iOS simulator**
+
 ```bash
-./hyperexecute --user $LT_USERNAME --key $LT_ACCESS_KEY --config yaml/hyperexecute.yaml
+./hyperexecute --user $LT_USERNAME --key $LT_ACCESS_KEY --config yaml/hypexSim.yaml
+```
+
+**Android real device**
+
+```bash
+./hyperexecute --user $LT_USERNAME --key $LT_ACCESS_KEY --config yaml/hypexRDAndroid.yaml
+```
+
+**Android parallel (autosplit)**
+
+```bash
+./hyperexecute --user $LT_USERNAME --key $LT_ACCESS_KEY --config yaml/hyperexecuteParallel.yaml
 ```
 
 View results on your TestMu AI dashboard.

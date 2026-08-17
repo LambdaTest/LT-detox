@@ -1,34 +1,28 @@
 #!/bin/bash
+set -euo pipefail
 
-# Enable debugging for troubleshooting (optional) 
-set -e
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=./_nvm.sh
+. "$SCRIPT_DIR/_nvm.sh"
 
-# Step 1: Install nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+# Keep vendor/bundle and ios/Pods so HyperExecute cache can be reused.
+# Detox isolates Xcode output via -derivedDataPath ios/build; do not wipe the
+# user-global DerivedData directory (that would force a cold build every run).
+rm -rf ios/build
 
-# Step 2: Source nvm and configure the environment
-export NVM_DIR="$HOME/.nvm"
-if [ -s "$NVM_DIR/nvm.sh" ]; then
-    . "$NVM_DIR/nvm.sh" # Load nvm
-else
-    echo "Error: nvm.sh not found. Ensure nvm was installed correctly."
-    exit 1
-fi
+eval "$(rbenv init -)"
+rbenv install -s 3.2.2
 
-if [ -s "$NVM_DIR/bash_completion" ]; then
-    . "$NVM_DIR/bash_completion" # Load nvm bash completion (optional)
-fi
+echo "verify ruby version"
+ruby -v
+export LANG=en_US.UTF-8
 
-# Step 3: Add Android SDK to PATH
-export ANDROID_HOME=/usr/lib/android-sdk
+gem install bundler:2.6.8
+bundle config set --local path vendor/bundle
+bundle install
 
-# Step 4: Install and use Node.js version 18
-nvm install 18
-nvm use 18
+npm ci
+npm run podInstall:ios
 
-# Step 5: Navigate to the project directory and install dependencies
-cd /home/ltuser/foreman/LT-detox || {
-    echo "Error: Directory /home/ltuser/foreman/LT-detox does not exist."
-    exit 1
-}
-npm install
+echo "Current directory: $PWD"
+ls -la "$PWD"
